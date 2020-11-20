@@ -487,6 +487,7 @@ class qtype_multichoiceset extends question_type {
             $expout .= "    <shownumcorrect/>\n";
         }
         $expout .= "    <answernumbering>{$question->options->answernumbering}</answernumbering>\n";
+        $expout .= "    <showstandardinstruction>{$question->options->showstandardinstruction}</showstandardinstruction>\n";
         $expout .= $format->write_answers($question->options->answers);
 
         return $expout;
@@ -515,6 +516,9 @@ class qtype_multichoiceset extends question_type {
 
         $question->answernumbering = $format->getpath($data,
                 array('#', 'answernumbering', 0, '#'), 'abc');
+
+        $question->showstandardinstruction = $format->trans_single(
+                 $format->getpath($data, array('#', 'showstandardinstruction', 0, '#'), 1));
 
         $question->correctfeedback = array();
         $question->correctfeedback['text'] = $format->getpath($data, array('#', 'correctfeedback', 0, '#', 'text', 0, '#'),
