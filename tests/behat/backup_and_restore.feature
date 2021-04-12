@@ -30,6 +30,7 @@ Feature: Test duplicating a quiz containing a All-or-Nothing Multiple Choice que
       | Schema | Course name | Course 2 |
     And I navigate to "Question bank" in current page administration
     And I click on "Edit" "link" in the "All-or-nothing-001" "table_row"
+    And I follow "Edit question"
     Then the following fields match these values:
       | Question name                      | All-or-nothing-001                 |
       | Question text                      | Which are the odd numbers?         |
