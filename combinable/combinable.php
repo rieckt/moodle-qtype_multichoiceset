@@ -65,7 +65,7 @@ class qtype_combined_combinable_type_multichoiceset extends qtype_combined_combi
     /**
      * Process the subquestion data
      *
-     * @param $subqdata Subquestion data
+     * @param array $subqdata Subquestion data
      * @return array containing the answer properties
      */
     protected function transform_subq_form_data_to_full($subqdata) {

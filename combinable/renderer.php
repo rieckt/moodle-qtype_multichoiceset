@@ -17,7 +17,7 @@
 /**
  * Combined question embedded sub question renderer class.
  *
- * @package   qtype_oumultiresponse
+ * @package   qtype_multichoiceset
  * @copyright  2019 Jean-Michel Vedrine
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

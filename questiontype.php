@@ -638,7 +638,7 @@ class qtype_multichoiceset extends question_type {
 }
 
 /**
- * An extension of {@link question_hint_with_parts} for multichoiceset questions.
+ * An extension of function question_hint_with_parts() for multichoiceset questions.
  *
  * This has an extra option for whether to show the feedback for each choice.
  *
