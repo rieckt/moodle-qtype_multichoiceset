@@ -145,7 +145,7 @@ class qtype_combined_combinable_multichoiceset extends qtype_combined_combinable
      * @param array $fileoptions
      * @return array
      */
-    public function data_to_form(context_module $context, array $fileoptions) {
+    public function data_to_form($context, $fileoptions) {
         $mroptions = array('answer' => array(), 'correctanswer' => array());
         if ($this->questionrec !== null) {
             foreach ($this->questionrec->options->answers as $questionrecanswer) {
