@@ -2,6 +2,7 @@ Release notes
 -------------
 
 Date          Version   Comment
+2021/04/14    1.7.4     Revert adding type to add_form_fragment argument as it breaks on 3.10
 2021/04/12    1.7.3     Fix code warnings, behat errors in 3.8+.
 2021/01/12    1.7.2     Fix error in backup facility introduced in 1.7.0.
 2020/11/20    1.7.1     Add support for standard instruction flag in XML import/export.
