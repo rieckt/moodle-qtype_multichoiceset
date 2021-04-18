@@ -2,6 +2,7 @@ Release notes
 -------------
 
 Date          Version   Comment
+2021/04/18    1.6.8     Clean up older pre-Moodle 3.8 code.
 2021/04/14    1.7.5     Revert adding type to data_to_form function argument as it generates a warning on 3.10
 2021/04/14    1.7.4     Revert adding type to add_form_fragment function argument as it breaks on 3.10
 2021/04/12    1.7.3     Fix code warnings, behat errors in 3.8+.
