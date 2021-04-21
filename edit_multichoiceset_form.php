@@ -98,6 +98,7 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
 
     /**
      * Create the form elements required by one hint.
+     *
      * @param bool $withclearwrong whether this question type uses the 'Clear wrong' option on hints.
      * @param bool $withshownumpartscorrect whether this quesiton type uses the 'Show num parts correct' option on hints.
      * @return array form field elements for one hint.
@@ -111,8 +112,10 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
     }
 
     /**
-     * Perform any preprocessing needed on the data passed to {@link set_data()}
-     * before it is used to initialise the form.
+     * Perform any preprocessing needed on the data passed to function set_data()
+     *
+     * This is done before it is used to initialise the form.
+     *
      * @param object $question the data being passed to the form.
      * @return object $question the modified data.
      */
@@ -169,6 +172,7 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
 
     /**
      * Perform any validation needed
+     *
      * @param object $data the data being returned by the form.
      * @param array $files any files being returned by the form.
      * @return array any errors in the form
@@ -209,6 +213,7 @@ class qtype_multichoiceset_edit_form extends question_edit_form {
 
     /**
      * Return the question type name.
+     *
      * @return string the question type name
      */
     public function qtype() {

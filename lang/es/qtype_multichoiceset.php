@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['correctanswer'] = 'Correcto';
 $string['deletedchoice'] = 'Esta opción se eliminó después de que se inició el intento.';
 $string['distractor'] = 'Incorrecto';
 $string['errnocorrect'] = 'Al menos una de las opciones debe ser correcta para que sea posible obtener una calificación completa para esta pregunta.';
@@ -32,5 +33,5 @@ $string['pluginname_link'] = 'question/type/multichoiceset';
 $string['pluginnameadding'] = 'Agregar una pregunta de opción múltiple de todo o nada';
 $string['pluginnameediting'] = 'Editando una pregunta de opción múltiple de todo o nada';
 $string['pluginnamesummary'] = 'Permite la selección de respuestas múltiples de una lista predefinida y usa la calificación de todo o nada (100% o 0%).';
-$string['correctanswer'] = 'Correcto';
+$string['privacy:metadata'] = 'The All-or-Nothing Multiple Choice plugin does not store any personal data.';
 $string['showeachanswerfeedback'] = 'Mostrar los comentarios de las respuestas seleccionadas.';
