@@ -2,6 +2,8 @@ Release notes
 -------------
 
 Date          Version   Comment
+2021/04/24    1.8.0     More code cleanup of 3.8 code.
+2021/04/18    1.6.8     Clean up older pre-Moodle 3.8 code.
 2019/05/08    1.6.5     Add support for combinable question type, improve error recovery and testing (provided by J-M Vedrine)
 2019/04/05    1.6.4     Add support for Spanish (International) (provided by Carlos Pasqualini)
 2019/01/29    1.6.3     Add support for mobile app 3.6 (provided by Zvonko Martinovic)

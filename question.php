@@ -40,8 +40,7 @@ class qtype_multichoiceset_question extends qtype_multichoice_multi_question {
      *
      * Calculate the grade based on the users response
      *
-     * @param array $response responses, as returned by
-     *      {@link question_attempt_step::get_qt_data()}.
+     * @param array $response responses, as returned by question_attempt_step::get_qt_data()
      * @return array fraction and state
      */
     public function grade_response(array $response) {
