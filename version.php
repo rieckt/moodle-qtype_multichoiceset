@@ -29,7 +29,6 @@ $plugin->version   = 2021041800;
 
 $plugin->requires  = 2015111600;
 
-$plugin->cron      = 0;
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->release   = '1.6.8 (Build: 2021041800)';
 
