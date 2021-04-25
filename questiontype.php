@@ -85,7 +85,7 @@ class qtype_multichoiceset extends question_type {
         $options->incorrectfeedback = get_string('incorrectfeedbackdefault', 'question');
         $options->incorrectfeedbackformat = FORMAT_HTML;
 
-        $config = get_config('qtype_multichoiceset');
+        $config = get_config('qtype_multichoice');
         $options->single = $config->answerhowmany;
         if (isset($question->layout)) {
             $options->layout = $question->layout;
