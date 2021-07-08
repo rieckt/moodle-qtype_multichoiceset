@@ -24,9 +24,7 @@
 
 $string['correctanswer'] = 'Correcto';
 $string['deletedchoice'] = 'Esta opción se eliminó después de que se inició el intento.';
-$string['distractor'] = 'Incorrecto';
 $string['errnocorrect'] = 'Al menos una de las opciones debe ser correcta para que sea posible obtener una calificación completa para esta pregunta.';
-$string['included'] = 'Correcto';
 $string['pluginname'] = 'Opción múltiple de todo o nada';
 $string['pluginname_help'] = 'Después de una introducción opcional, el encuestado puede elegir una o más respuestas. Si las respuestas elegidas corresponden exactamente a las opciones "correctas" definidas en la pregunta, el encuestado obtiene el 100%. Si elige alguna opción "incorrecta" o no selecciona todas las opciones "correctas", la calificación es 0%. Al menos una opción debe estar marcada como correcta para cada pregunta. Agregue una opción "Ninguna de las anteriores" para manejar una pregunta donde ninguna de las otras opciones sea correcta. A diferencia de la pregunta de opción múltiple con calificaciones fraccionarias, las únicas calificaciones posibles para una pregunta de todo o nada son 100% o 0% ';
 $string['pluginname_link'] = 'question/type/multichoiceset';
