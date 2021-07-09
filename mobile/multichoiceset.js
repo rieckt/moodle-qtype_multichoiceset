@@ -43,11 +43,20 @@ var result = {
         var divs = answeroptions.querySelectorAll('div[class^=r]'); // Only get the answer options divs (class="r0...").
         divs.forEach(function(d, i) {
             // Each answer option contains all the data for presentation, it just needs extracting.
-            var label = d.querySelector('label').innerHTML;
-            var name = d.querySelector('label').getAttribute('for');
-            var checked = (d.querySelector('input[type=checkbox]').getAttribute('checked') ? true : false);
+            var checkbox = d.querySelector('input[type=checkbox]');
+            var feedbackDiv = d.querySelector('div.core-question-feedback-container');
+            var labelId = checkbox.getAttribute('aria-labelledby');
+            var labelElement = labelId ? d.querySelector('#' + labelId.replace(/:/g, '\\:')) : undefined;
+            if (!labelElement) {
+                // Not found, use the format used in older Moodle versions.
+                labelElement = d.querySelector('label');
+            }
+
+            var label = labelElement.innerHTML;
+            var name = checkbox.getAttribute('name');
+            var checked = (checkbox.getAttribute('checked') ? true : false);
             var disabled = (d.querySelector('input').getAttribute('disabled') === 'disabled' ? true : false);
-            var feedback = (d.querySelector('div') ? d.querySelector('div').innerHTML : '');
+            var feedback = (feedbackDiv ? feedbackDiv.innerHTML : '');
             var qclass = d.getAttribute('class');
             options.push({text: label, name: name, checked: checked, disabled: disabled, feedback: feedback, qclass: qclass});
         });
