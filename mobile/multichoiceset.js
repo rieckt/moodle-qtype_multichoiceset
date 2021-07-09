@@ -22,7 +22,6 @@ var result = {
         // Replace Moodle's correct/incorrect classes, feedback and icons with mobile versions.
         that.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
         that.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
-        that.CoreQuestionHelperProvider.treatCorrectnessIcons(div);
 
         // Get useful parts of the provided question html data.
         var questiontext = div.querySelector('.qtext');
@@ -57,8 +56,11 @@ var result = {
             var checked = (checkbox.getAttribute('checked') ? true : false);
             var disabled = (d.querySelector('input').getAttribute('disabled') === 'disabled' ? true : false);
             var feedback = (feedbackDiv ? feedbackDiv.innerHTML : '');
-            var qclass = d.getAttribute('class');
-            options.push({text: label, name: name, checked: checked, disabled: disabled, feedback: feedback, qclass: qclass});
+            var qclass = d.getAttribute('class') || '';
+            var iscorrect = qclass.indexOf('core-question-answer-correct') >= 0 ? 1 :
+                (qclass.indexOf('core-question-answer-incorrect') >= 0 ? 0 : undefined);
+            options.push({text: label, name: name, checked: checked, disabled: disabled, feedback: feedback, qclass: qclass,
+                iscorrect: iscorrect});
         });
         this.question.options = options;
 

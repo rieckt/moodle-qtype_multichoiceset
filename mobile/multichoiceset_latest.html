@@ -18,6 +18,11 @@
         </ion-label>
         <ion-checkbox [attr.name]="option.name" [(ngModel)]="option.checked" [disabled]="option.disabled"
                 slot="end"></ion-checkbox>
+
+        <ion-icon *ngIf="option.iscorrect === 1" class="core-correct-icon" name="fas-check" color="success"
+                [attr.aria-label]="'core.question.correct' | translate"></ion-icon>
+        <ion-icon *ngIf="option.iscorrect === 0" class="core-correct-icon" name="fas-times" color="danger"
+            [attr.aria-label]="'core.question.incorrect' | translate"></ion-icon>
         <!-- ion-checkbox doesn't use an input. Create a hidden input to hold the value. -->
         <input type="hidden" [ngModel]="option.checked" [attr.name]="option.name">
     </ion-item>
