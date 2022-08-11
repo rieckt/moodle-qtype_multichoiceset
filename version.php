@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qtype_multichoiceset';
-$plugin->version   = 2021070900;
+$plugin->version   = 2021071200;
 
 $plugin->requires  = 2020110900; // Requires Moodle 3.10.
 
