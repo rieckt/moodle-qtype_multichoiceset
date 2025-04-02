@@ -20,97 +20,93 @@
  * @copyright  2024 Tim-Louis Rieck <tim-louis.rieck@oncampus.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(["core/str"], (str) => {
-	const module = {
-		componentInit: function () {
-			if (!this.question) {
-				return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
+define(["core/str"], (str) => ({
+	componentInit: function () {
+		if (!this.question) {
+			return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
+		}
+
+		// Create a temporary div to ease extraction of parts of the provided html.
+		const div = document.createElement("div");
+		div.innerHTML = this.question.html;
+
+		// Replace Moodle's correct/incorrect classes, feedback and icons with mobile versions.
+		this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
+		this.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
+
+		// Get useful parts of the provided question html data.
+		const questiontext = div.querySelector(".qtext");
+		const prompt = div.querySelector(".prompt");
+		const answeroptions = div.querySelector(".answer");
+
+		// Add the useful parts back into the question object ready for rendering in the template.
+		this.question.text = questiontext ? questiontext.innerHTML : "";
+
+		// Without the question text there is no point in proceeding.
+		if (!this.question.text) {
+			return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
+		}
+
+		if (prompt) {
+			this.question.prompt = prompt.innerHTML;
+		}
+
+		const options = [];
+		const divs = answeroptions
+			? answeroptions.querySelectorAll("div[class^=r]")
+			: [];
+
+		Array.prototype.forEach.call(divs, (d) => {
+			// Each answer option contains all the data for presentation, it just needs extracting.
+			const checkbox = d.querySelector("input[type=checkbox]");
+			if (!checkbox) {
+				return;
 			}
 
-			// Create a temporary div to ease extraction of parts of the provided html.
-			const div = document.createElement("div");
-			div.innerHTML = this.question.html;
+			const feedbackDiv = d.querySelector(
+				"div.core-question-feedback-container",
+			);
+			const labelId = checkbox.getAttribute("aria-labelledby");
+			let labelElement = labelId
+				? d.querySelector(`#${labelId.replace(/:/g, "\\:")}`)
+				: null;
 
-			// Replace Moodle's correct/incorrect classes, feedback and icons with mobile versions.
-			this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
-			this.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
-
-			// Get useful parts of the provided question html data.
-			const questiontext = div.querySelector(".qtext");
-			const prompt = div.querySelector(".prompt");
-			const answeroptions = div.querySelector(".answer");
-
-			// Add the useful parts back into the question object ready for rendering in the template.
-			this.question.text = questiontext ? questiontext.innerHTML : "";
-
-			// Without the question text there is no point in proceeding.
-			if (!this.question.text) {
-				return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
+			// If not found, use the format used in older Moodle versions.
+			if (!labelElement) {
+				labelElement = d.querySelector("label");
 			}
 
-			if (prompt) {
-				this.question.prompt = prompt.innerHTML;
+			if (!labelElement) {
+				return;
 			}
 
-			const options = [];
-			const divs = answeroptions
-				? answeroptions.querySelectorAll("div[class^=r]")
-				: [];
+			const label = labelElement.innerHTML;
+			const name = checkbox.getAttribute("name");
+			const checked = checkbox.hasAttribute("checked");
+			const disabled = d.querySelector("input").hasAttribute("disabled");
+			const feedback = feedbackDiv ? feedbackDiv.innerHTML : "";
+			const qclass = d.getAttribute("class") || "";
+			const iscorrect = qclass.includes("core-question-answer-correct")
+				? 1
+				: qclass.includes("core-question-answer-incorrect")
+					? 0
+					: undefined;
 
-			Array.prototype.forEach.call(divs, (d) => {
-				// Each answer option contains all the data for presentation, it just needs extracting.
-				const checkbox = d.querySelector("input[type=checkbox]");
-				if (!checkbox) {
-					return;
-				}
-
-				const feedbackDiv = d.querySelector(
-					"div.core-question-feedback-container",
-				);
-				const labelId = checkbox.getAttribute("aria-labelledby");
-				let labelElement = labelId
-					? d.querySelector(`#${labelId.replace(/:/g, "\\:")}`)
-					: null;
-
-				// If not found, use the format used in older Moodle versions.
-				if (!labelElement) {
-					labelElement = d.querySelector("label");
-				}
-
-				if (!labelElement) {
-					return;
-				}
-
-				const label = labelElement.innerHTML;
-				const name = checkbox.getAttribute("name");
-				const checked = checkbox.hasAttribute("checked");
-				const disabled = d.querySelector("input").hasAttribute("disabled");
-				const feedback = feedbackDiv ? feedbackDiv.innerHTML : "";
-				const qclass = d.getAttribute("class") || "";
-				const iscorrect = qclass.includes("core-question-answer-correct")
-					? 1
-					: qclass.includes("core-question-answer-incorrect")
-						? 0
-						: undefined;
-
-				options.push({
-					text: label,
-					name: name,
-					checked: checked,
-					disabled: disabled,
-					feedback: feedback,
-					qclass: qclass,
-					iscorrect: iscorrect,
-				});
+			options.push({
+				text: label,
+				name: name,
+				checked: checked,
+				disabled: disabled,
+				feedback: feedback,
+				qclass: qclass,
+				iscorrect: iscorrect,
 			});
+		});
 
-			this.question.options = options;
-			return true;
-		},
-	};
-
-	return module;
-});
+		this.question.options = options;
+		return true;
+	},
+}));
 
 // This next line is required as is (because of an eval step that puts this result object into the global scope).
 result;
