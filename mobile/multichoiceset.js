@@ -107,6 +107,3 @@ define(["core/str"], (str) => ({
 		return true;
 	},
 }));
-
-// This next line is required as is (because of an eval step that puts this result object into the global scope).
-result;
