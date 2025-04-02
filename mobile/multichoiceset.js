@@ -17,10 +17,10 @@
  * JavaScript for the multichoiceset question type.
  *
  * @module     qtype_multichoiceset/mobile
- * @copyright  2023 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
+ * @copyright  2024 Tim-Louis Rieck <tim-louis.rieck@oncampus.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define([], function () {
+define(['core/cookie'], function(Cookie) {
 	const that = this;
 	const result = {
 		componentInit: function () {
@@ -53,6 +53,10 @@ define([], function () {
 
 			const options = [];
 			const divs = answeroptions.querySelectorAll("div[class^=r]"); // Only get the answer options divs (class="r0...").
+
+			// Save last state in cookie if available
+			const lastState = Cookie.get('qtype_multichoiceset_state');
+
 			for (const d of divs) {
 				// Each answer option contains all the data for presentation, it just needs extracting.
 				const checkbox = d.querySelector("input[type=checkbox]");
@@ -92,6 +96,12 @@ define([], function () {
 				});
 			}
 			this.question.options = options;
+
+			// Save current state
+			Cookie.set('qtype_multichoiceset_state', JSON.stringify(this.question.options), {
+				path: '/',
+				expires: 1 // 1 day
+			});
 
 			return true;
 		},
