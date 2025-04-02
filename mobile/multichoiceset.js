@@ -21,76 +21,84 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-const result = {
-    /**
-     * Initialize the multichoiceset question component.
-     *
-     * @return {boolean|void} True if initialization successful, void if error
-     */
-    componentInit: function () {
-        if (!this.question) {
-            return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
-        }
+// This needs to be var for mobile app compatibility.
+// The var usage is required here - the mobile app needs this specific format.
+/* eslint-disable-next-line no-var */
+var result;
 
-        // Create a temporary div to ease extraction of parts of the provided html.
-        const div = document.createElement('div');
-        div.innerHTML = this.question.html;
+define(() => {
+    result = {
+        /**
+         * Initialize the multichoiceset question component.
+         *
+         * @return {boolean|void} True if initialization successful, void if error
+         */
+        componentInit: function() {
+            if (!this.question) {
+                return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
+            }
 
-        // Replace Moodle's correct/incorrect classes, feedback and icons with mobile versions.
-        this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
-        this.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
+            // Create a temporary div to ease extraction of parts of the provided html.
+            const div = document.createElement('div');
+            div.innerHTML = this.question.html;
 
-        // Get useful parts of the provided question html data.
-        const questiontext = div.querySelector('.qtext');
-        const prompt = div.querySelector('.prompt');
-        const answeroptions = div.querySelector('.answer');
+            // Replace Moodle's correct/incorrect classes, feedback and icons with mobile versions.
+            this.CoreQuestionHelperProvider.replaceCorrectnessClasses(div);
+            this.CoreQuestionHelperProvider.replaceFeedbackClasses(div);
 
-        // Add the useful parts back into the question object ready for rendering in the template.
-        this.question.text = questiontext.innerHTML;
-        // Without the question text there is no point in proceeding.
-        if (typeof this.question.text === 'undefined') {
-            return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
-        }
-        if (prompt !== null) {
-            this.question.prompt = prompt.innerHTML;
-        }
+            // Get useful parts of the provided question html data.
+            const questiontext = div.querySelector('.qtext');
+            const prompt = div.querySelector('.prompt');
+            const answeroptions = div.querySelector('.answer');
 
-        const options = [];
-        // Only get the answer options divs (class="r0...").
-        const divs = answeroptions.querySelectorAll('div[class^=r]');
+            // Add the useful parts back into the question object ready for rendering in the template.
+            this.question.text = questiontext.innerHTML;
+            // Without the question text there is no point in proceeding.
+            if (typeof this.question.text === 'undefined') {
+                return this.CoreQuestionHelperProvider.showComponentError(this.onAbort);
+            }
+            if (prompt !== null) {
+                this.question.prompt = prompt.innerHTML;
+            }
 
-        for (const d of divs) {
-            // Each answer option contains all the data for presentation, it just needs extracting.
-            const checkbox = d.querySelector('input[type=checkbox]');
-            const feedbackDiv = d.querySelector('div.core-question-feedback-container');
-            const label = d.querySelector('label')?.innerHTML || '';
-            const name = checkbox.getAttribute('name');
-            const checked = !!checkbox.getAttribute('checked');
-            const disabled = d.querySelector('input').getAttribute('disabled') === 'disabled';
-            const feedback = feedbackDiv ? feedbackDiv.innerHTML : '';
-            const qclass = d.getAttribute('class') || '';
-            const iscorrect =
-                qclass.indexOf('core-question-answer-correct') >= 0
+            const options = [];
+            // Only get the answer options divs (class="r0...").
+            const divs = answeroptions.querySelectorAll('div[class^=r]');
+
+            for (const d of divs) {
+                // Each answer option contains all the data for presentation, it just needs extracting.
+                const checkbox = d.querySelector('input[type=checkbox]');
+                const feedbackDiv = d.querySelector('div.core-question-feedback-container');
+                const label = d.querySelector('label')?.innerHTML || '';
+                const name = checkbox.getAttribute('name');
+                const checked = !!checkbox.getAttribute('checked');
+                const disabled = d.querySelector('input').getAttribute('disabled') === 'disabled';
+                const feedback = feedbackDiv ? feedbackDiv.innerHTML : '';
+                const qclass = d.getAttribute('class') || '';
+                const iscorrect = qclass.indexOf('core-question-answer-correct') >= 0
                     ? 1
                     : qclass.indexOf('core-question-answer-incorrect') >= 0
-                      ? 0
-                      : undefined;
+                        ? 0
+                        : undefined;
 
-            options.push({
-                text: label,
-                name,
-                checked,
-                disabled,
-                feedback,
-                qclass,
-                iscorrect,
-            });
+                options.push({
+                    text: label,
+                    name,
+                    checked,
+                    disabled,
+                    feedback,
+                    qclass,
+                    iscorrect,
+                });
+            }
+            this.question.options = options;
+
+            return true;
         }
-        this.question.options = options;
+    };
 
-        return true;
-    },
-};
+    return result;
+});
 
 /* eslint-disable-next-line no-unused-expressions */
 result;
