@@ -93,7 +93,4 @@ var result = {
     },
 };
 
-define([], () => result);
-
-/* eslint-disable-next-line no-unused-expressions */
-result;
+define('qtype_multichoiceset/mobile', [], () => result);
