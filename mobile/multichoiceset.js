@@ -20,7 +20,7 @@
  * @copyright  2024 Tim-Louis Rieck <tim-louis.rieck@oncampus.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['core/cookie'], function(Cookie) {
+define([], function() {
 	const that = this;
 	const result = {
 		componentInit: function () {
@@ -53,9 +53,6 @@ define(['core/cookie'], function(Cookie) {
 
 			const options = [];
 			const divs = answeroptions.querySelectorAll("div[class^=r]"); // Only get the answer options divs (class="r0...").
-
-			// Save last state in cookie if available
-			const lastState = Cookie.get('qtype_multichoiceset_state');
 
 			for (const d of divs) {
 				// Each answer option contains all the data for presentation, it just needs extracting.
@@ -96,12 +93,6 @@ define(['core/cookie'], function(Cookie) {
 				});
 			}
 			this.question.options = options;
-
-			// Save current state
-			Cookie.set('qtype_multichoiceset_state', JSON.stringify(this.question.options), {
-				path: '/',
-				expires: 1 // 1 day
-			});
 
 			return true;
 		},
